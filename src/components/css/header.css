@@ -1,0 +1,39 @@
+header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    border-bottom: 0.5px solid white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    height: 56px;
+    background-color: #1d2939;
+    padding-left: 20px;
+    padding-right: 20px;
+    z-index: 100;
+   
+}
+
+
+
+header button{
+    color: white;
+    border-radius: 5px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    background-color: #155eef;
+    border: none;
+    letter-spacing: 1px;
+    width: 80px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+button:hover{
+    cursor: pointer;
+    opacity: calc(85%);
+}
+
+
