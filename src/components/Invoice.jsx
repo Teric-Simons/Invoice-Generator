@@ -1,5 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
 import "./css/invoice.css";
+import { generateInvoice } from "./javascript/generateInvoice";
+import Calendar from "./Calendar";
+import { format } from "date-fns";
 
 const currencys = [
   "USD",
@@ -17,21 +20,24 @@ const currencys = [
 ];
 
 export default function Invoice() {
+  const [fileUploaded, setfileUploaded] = useState(false);
   const [formData, setformData] = useState({
     InvoiceNumber: "",
     PurchaseOrder: "",
     Logo: "",
+    LogoName: "",
     CompanyDetails: "",
     BillTo: "",
     Currency: "",
-    InvoiceDate: "",
-    DueDate: "",
-    items: [{ key: 0, description: "", unitCost: "", quantity: 0, amount: 0 }],
+    InvoiceDate: format(new Date(), "yyyy-MM-dd"),
+    DueDate: format(new Date(), "yyyy-MM-dd"),
+    items: [{ key: 0, description: "", unitCost: 0, quantity: 0, amount: 0 }],
   });
 
   const globalKey = useRef(0);
 
   useEffect(() => {
+    console.log(formData);
     console.log(formData.items);
   });
 
@@ -39,6 +45,39 @@ export default function Invoice() {
     const { name, value } = e.target;
     setformData({ ...formData, [name]: value });
     console.log(formData);
+  };
+
+  const handleDateChangeEvent = (name, date) => {
+    setformData({
+      ...formData,
+      [name]: format(date, "yyyy-MM-dd"),
+    });
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setformData({ ...formData, Logo: reader.result, LogoName: file.name });
+      };
+      reader.readAsDataURL(file);
+    }
+    setfileUploaded(true);
+  };
+
+  const handlePositionChange = (key) => {
+    if (key === 0) {
+      return;
+    }
+    const upditems = formData.items;
+    const position = upditems.findIndex((item) => item.key === key);
+    const prevKey = upditems[position - 1].key;
+    console.log(prevKey);
+    upditems[position - 1].key = key;
+    upditems[position].key = prevKey;
+    const sortedItems = upditems.sort((a, b) => a.key - b.key);
+    setformData({ ...formData, items: sortedItems });
   };
 
   const addNewItem = () => {
@@ -49,7 +88,7 @@ export default function Invoice() {
       {
         key: globalKey.current,
         description: "",
-        unitCost: "",
+        unitCost: 0,
         quantity: 0,
         amount: 0,
       },
@@ -64,9 +103,23 @@ export default function Invoice() {
   };
 
   const handleChangeItem = (itemkey, value, nname) => {
+    if (nname === "unitCost") {
+      if (isNaN(value)) {
+        return;
+      }
+    }
+    if (nname === "quantity") {
+      if (isNaN(value)) {
+        return;
+      }
+    }
+
     const itemss = formData.items;
     const selectedItem = itemss.find((item) => item.key === itemkey);
     selectedItem[nname] = value;
+    if (selectedItem.unitCost && selectedItem.quantity) {
+      selectedItem["amount"] = selectedItem.unitCost * selectedItem.quantity;
+    }
     setformData({ ...formData, items: itemss });
     console.log(itemss);
   };
@@ -104,10 +157,38 @@ export default function Invoice() {
           <div class="formGroup">
             <label for="real-file">Logo</label>
             <label class="file" for="logo">
-              <p id="upload-file">Upload file</p>
-              <p style={{ fontSize: "14px" }}>JPG, JPEG, PNG, less than 5MB</p>
+              {fileUploaded ? (
+                <div className="upload-successful">
+                  <svg
+                    width="24"
+                    height="24"
+                    fill="green"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M12 22.286c5.68 0 10.286-4.605 10.286-10.286C22.286 6.32 17.68 1.714 12 1.714 6.32 1.714 1.714 6.32 1.714 12c0 5.68 4.605 10.286 10.286 10.286Zm-1.32-5.397 7.712-7.711-1.212-1.213-7.109 7.109-3.465-3.466-1.212 1.212 4.068 4.069a.861.861 0 0 0 1.219 0Z"
+                      clip-rule="evenodd"
+                    ></path>
+                  </svg>
+                  <div style={{ marginLeft: "12px" }}>
+                    <p id="upload-file">{formData.LogoName}</p>
+                    <p style={{ fontSize: "14px", fontWeight: "bold" }}>
+                      File Uploaded
+                    </p>
+                  </div>
+                </div>
+              ) : (
+                <>
+                  <p id="upload-file">Upload file</p>
+                  <p style={{ fontSize: "14px" }}>
+                    JPG, JPEG, PNG, less than 5MB
+                  </p>
+                </>
+              )}
             </label>
-            <input type="file" id="logo" hidden />
+            <input onChange={handleFileChange} type="file" id="logo" hidden />
           </div>
         </div>
         <div className="row2x1">
@@ -153,23 +234,19 @@ export default function Invoice() {
 
           <div className="formGroup">
             <label htmlFor="invoiceDate">Invoice Date</label>
-            <input
-              type="text"
-              id="invoiceDate"
+            <Calendar
+              selected={formData.InvoiceDate}
+              onChangefunc={handleDateChangeEvent}
               name="InvoiceDate"
-              value={formData.InvoiceDate}
-              onChange={handleChangeEvent}
             />
           </div>
 
           <div className="formGroup">
             <label htmlFor="dueDate">Due Date</label>
-            <input
-              type="text"
-              id="dueDate"
+            <Calendar
+              selected={formData.DueDate}
+              onChangefunc={handleDateChangeEvent}
               name="DueDate"
-              value={formData.DueDate}
-              onChange={handleChangeEvent}
             />
           </div>
         </div>
@@ -221,11 +298,12 @@ export default function Invoice() {
                 value={item.amount}
                 type="text"
                 id="amount"
+                disabled={true}
               ></input>
             </div>
 
             <div className="formGroup buttons">
-              <button>
+              <button onClick={() => handlePositionChange(item.key)}>
                 <svg
                   width="24"
                   height="24"
@@ -266,7 +344,14 @@ export default function Invoice() {
           <p>Add item</p>
         </div>
         <div style={{ textAlign: "center" }}>
-          <button className="create-invoice">Create the Invoice</button>
+          <button
+            onClick={() => {
+              generateInvoice(formData);
+            }}
+            className="create-invoice"
+          >
+            Create the Invoice
+          </button>
         </div>
       </form>
     </div>
