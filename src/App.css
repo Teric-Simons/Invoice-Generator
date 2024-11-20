@@ -2,6 +2,10 @@
 margin-top: 55px;
     font-family: 'Wise Sans', 'Inter', sans-serif;
     background: linear-gradient(to bottom, #1d2939 300px, #fafafa 300px);
+ display: flex;
+ flex-direction: column;
+
+  
 }
 
 .page-info{
@@ -9,15 +13,16 @@ margin-top: 55px;
 }
 
 .page-info h1{
-  padding-top:15px;
+  padding-top:0.9375em;
   color: white;
-  font-size:max(2rem, min(calc(-.54545rem + 12.72727vw), 2.875rem));
+font-size: 2.5rem;
   text-transform: uppercase;
   letter-spacing: 0px;
 }
 
 .page-info p{
   color: white;
-  font-size:19px;
+  font-size:1.1875rem;
  
 }
+
