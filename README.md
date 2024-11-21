@@ -1,70 +1,45 @@
-# Getting Started with Create React App
+# Invoice Generator
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Overview
+The Invoice Generator is a web application that allows users to create professional PDF invoices quickly and easily. With our free invoice maker, you can generate an invoice online in just a few moments.
 
-## Available Scripts
+## Features
+- **Invoice Number**: Assign a unique identifier to each invoice.
+- **Purchase Order**: Specify the purchase order number.
+- **Logo Upload**: Customize your invoice with your company logo. Supported formats include JPG, JPEG, and PNG, with a file size limit of 5MB.
+- **Company Details**: Input your company's information.
+- **Bill To**: Enter the recipient's details.
+- **Currency**: Select the currency for the invoice (default is USD).
+- **Invoice Date**: Set the date the invoice is issued.
+- **Due Date**: Set the date the payment is due.
+- **Item Description**: Add details about the items or services being billed.
+- **Unit Cost**: Specify the cost per unit.
+- **Quantity**: Enter the number of units.
+- **Amount**: Automatically calculated based on unit cost and quantity.
+- **Add Item**: Add multiple items to the invoice.
+- **Create Invoice**: Generate and download the PDF invoice.
 
-In the project directory, you can run:
+## Getting Started
 
-### `npm start`
+### Prerequisites
+- Ensure you have a modern web browser installed.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Installation
+1. Clone the repository:
+   ```sh
+   git clone https://github.com/Teric-Simons/Invoice-Generator.git
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+2. Navigate to the project directory:
+    cd invoice-generator
+3. Install the dependencies:
+    npm install
 
-### `npm test`
+### Usage
+1. Start the development server:
+    npm start
+    Open your browser and navigate to http://localhost:3000.
+    Fill in the required fields to generate your invoice.
+    Click "Create Invoice" to download the PDF.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## License
+This project is licensed under the MIT License.
